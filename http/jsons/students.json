@@ -1,0 +1,7 @@
+[
+    {"id":1, "name": "judith", "age": 56,"complexion": "fair"}, 
+    {"id": 2, "name": "sam", "age": 16, "complexion": "dark"},
+    {"id": 3, "name": "collins", "age": 26, "complexion": "dark"},
+    {"id": 4, "name": "ade", "age": 18, "complexion": "fair"},
+    {"id": 5, "name": "chioma", "age": 23, "complexion": "fair"}
+]

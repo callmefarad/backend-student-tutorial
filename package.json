@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A training session for codelab student03",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callmefarad/backend-student-tutorial.git"
+  },
+  "keywords": [
+    "http",
+    "express",
+    "node.js",
+    "mongoDB",
+    "multer",
+    "nodemon",
+    "npm"
+  ],
+  "author": "Ubani U. Friday",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/callmefarad/backend-student-tutorial/issues"
+  },
+  "homepage": "https://github.com/callmefarad/backend-student-tutorial#readme"
+}
