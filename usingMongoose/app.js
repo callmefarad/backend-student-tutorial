@@ -1,12 +1,12 @@
 const express = require("express");
-const port = 4000;
 const mongoose = require("mongoose");
-const gameRoute = require("./gameRouter/gameRouter");
+const Route = require("./gameRoute/gameRoute");
+const port = 4000;
 
 const app = express();
 app.use(express.json());
 
-// create a connection to mongoDB atlas
+// create connection
 mongoose.connect(
   "mongodb+srv://callmefarad:B577f2Ai8bh6txuT@blog.eenxj.mongodb.net/gameDB?retryWrites=true&w=majority",
   {
@@ -16,21 +16,20 @@ mongoose.connect(
   }
 );
 
-// connect to the DB
 mongoose.connection
   .once("open", () => {
-    console.log("DB connected successfully");
+    console.log("Connection Successful");
   })
   .on("error", () => {
-    console.log("Error trying to connect to DB");
+    console.log("Error trying to connect to the database,");
   });
 
 app.get("/", (req, res) => {
-  res.send("A modern way of writing an API");
+  res.send("Modern API");
 });
 
-app.use("/api", gameRoute);
+app.use("/api/v1", Route);
 
 app.listen(port, () => {
-  console.log(`Server is not listening to port: ${port}`);
+  console.log(`Server is listening to port ${port}`);
 });

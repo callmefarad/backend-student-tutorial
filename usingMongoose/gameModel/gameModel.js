@@ -1,20 +1,22 @@
 const mongoose = require("mongoose");
 
-const gameSchedule = mongoose.Schema({
+// create a schema
+const gameSchema = mongoose.Schema({
   name: {
-    type: String,
+    type: "String",
     required: true,
   },
   game: {
-    type: String,
+    type: "String",
     required: true,
   },
   date: {
     type: Date,
-    default: new Date(),
+    default: Date.now(),
   },
 });
 
-const gameModel = mongoose.model("gameModel", gameSchedule);
+// create a model
+const gameModel = mongoose.model("gameModel", gameSchema);
 
 module.exports = gameModel;
