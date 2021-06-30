@@ -1,5 +1,22 @@
 const express = require("express");
 const gameModel = require("../gameModel/gameModel");
+const multer = require("multer");
+
+// creating a disk storage instance
+const storage = multer.diskStorage({
+  destination: (req, res, cb) => {
+    cb(null, "./uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+// function for uploading a single image to the diskStorage created
+const uploadImage = multer({ storage }).single("image");
+
+// function for uploading multiple images to the diskStorage
+// const uploadImage = multer({storage}).array("image", 3);
 
 // create a new gamer
 const newGamer = async (req, res) => {
@@ -7,7 +24,7 @@ const newGamer = async (req, res) => {
     const gamer = await gameModel.create({
       name: req.body.name,
       game: req.body.game,
-      date: Date.now(),
+      image: req.file.path,
     });
     res.status(200).json({ gamer });
   } catch (error) {
@@ -78,4 +95,5 @@ module.exports = {
   updateGamer,
   deleteGamer,
   deleteAllGamers,
+  uploadImage,
 };

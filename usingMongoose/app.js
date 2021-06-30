@@ -1,7 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const Route = require("./gameRoute/gameRoute");
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const app = express();
 app.use(express.json());
@@ -12,7 +13,6 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false,
   }
 );
 
@@ -27,7 +27,7 @@ mongoose.connection
 app.get("/", (req, res) => {
   res.send("Modern API");
 });
-
+app.use("/api/v1/gamers/uploads", express.static("./uploads"));
 app.use("/api/v1", Route);
 
 app.listen(port, () => {

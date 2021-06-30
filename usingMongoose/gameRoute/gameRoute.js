@@ -7,10 +7,11 @@ const {
   updateGamer,
   deleteGamer,
   deleteAllGamers,
+  uploadImage,
 } = require("../gameController/gameController");
 
 // endpoint for a new gamer
-route.post("/gamers", newGamer);
+route.post("/gamers", uploadImage, newGamer);
 
 // endpoint for all gamers
 route.get("/gamers", allGamer);
@@ -19,7 +20,7 @@ route.get("/gamers", allGamer);
 route.get("/gamer/:id", singleGamer);
 
 // endpoint for update gamer
-route.put("/gamer/:id", updateGamer);
+route.put("/gamer/:id", uploadImage, updateGamer);
 
 // endpoint for deleted gamer
 route.delete("/gamer/:id", deleteGamer);

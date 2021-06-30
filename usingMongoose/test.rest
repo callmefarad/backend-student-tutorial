@@ -1,0 +1,30 @@
+### create a new gamer
+POST http://localhost:4000/api/v1/gamers
+Content-Type: application/json
+
+{
+    "name": "Judith",
+    "gamers": "Card",
+    "image": "\\C:\\Users\\5th gen\\Pictures\\bdcl students\\codelab instructors\\bukola.jpg"
+}
+
+### get all gamers
+GET http://localhost:4000/api/v1/gamers
+
+### get a single gamer
+GET http://localhost:4000/api/v1/gamer/60dc18ead6fcd93f2093df3f
+
+### update a single gamer 
+PUT http://localhost:4000/api/v1/gamer/
+Content-Type: application/json
+{
+    "name": "Jude",
+    "game": "Ball",
+    "image": "uploads\\bukola.jpg"
+}
+
+### delete a gamer
+DELETE http://localhost:4000/api/v1/gamer/60dc0cf0513941162c26ed94
+
+### delete all gamers
+DELETE http://localhost:4000/api/v1/gamers
