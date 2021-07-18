@@ -1,10 +1,11 @@
 const express = require("express");
 const gameModel = require("../gameModel/gameModel");
 const multer = require("multer");
+const { db } = require("../gameModel/gameModel");
 
-// creating a disk storage instance
+// creating a disk storage instance( LOCAL STORAGE)
 const storage = multer.diskStorage({
-  destination: (req, res, cb) => {
+  destination: (req, file, cb) => {
     cb(null, "./uploads");
   },
   filename: (req, file, cb) => {
@@ -33,10 +34,32 @@ const newGamer = async (req, res) => {
 };
 
 // all gamers
+// const allGamer = async (req, res) => {
+//   try {
+//     const gamers = await gameModel.find();
+//     res.status(200).json({ gamers });
+//   } catch (error) {
+//     res.status(404).json({ message: error.message });
+//   }
+// };
 const allGamer = async (req, res) => {
+  // declare the match variable
+  const match = {};
+  // validate the user search using "query" keyword from express to scan
+  if (req.query.name) {
+    match.name = { $regex: req.query.name, $options: "i" };
+  }
+  if (req.query.game) {
+    match.game = { $regex: req.query.game, $options: "i" };
+  }
+
   try {
-    const gamers = await gameModel.find();
-    res.status(200).json({ gamers });
+    const gamer = await gameModel.aggregate([
+      {
+        $match: match,
+      },
+    ]);
+    res.status(200).json({ gamer });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -57,8 +80,13 @@ const updateGamer = async (req, res) => {
   try {
     // get the gamer by id
     const gamer = await gameModel.findById(req.params.id);
+    const data = {
+      name: req.body.name || gamer.name,
+      game: req.body.game || gamer.game,
+      image: req.file.path || gamer.image,
+    };
     // update the gamer
-    const updatedGamer = await gamer.updateOne(req.body);
+    const updatedGamer = await gamer.updateOne(data);
     res.status(200).json(updatedGamer);
   } catch (error) {
     res.status(400).json({ message: error.message });

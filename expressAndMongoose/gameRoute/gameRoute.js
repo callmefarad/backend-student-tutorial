@@ -17,13 +17,13 @@ route.post("/gamers", uploadImage, newGamer);
 route.get("/gamers", allGamer);
 
 // endpoint for a single gamer
-route.get("/gamer/:id", singleGamer);
+route.get("/gamers/:id", singleGamer);
 
 // endpoint for update gamer
-route.put("/gamer/:id", uploadImage, updateGamer);
+route.put("/gamers/:id", uploadImage, updateGamer);
 
 // endpoint for deleted gamer
-route.delete("/gamer/:id", deleteGamer);
+route.delete("/gamers/:id", deleteGamer);
 
 // endpoint for deleting all gamers
 route.delete("/gamers", deleteAllGamers);

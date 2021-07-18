@@ -1,8 +1,10 @@
 <html>
   <head>
-    <title>serving files from nodejs backend</title>
+    <title>homepage</title>
   </head>
   <body>
-    <h1>serving files from nodejs backend</h1>
+    <h1>
+      Modern Way of creating REST API using nodejs framework and express library
+    </h1>
   </body>
 </html>;
