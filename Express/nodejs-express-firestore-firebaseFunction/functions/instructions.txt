@@ -1,0 +1,11 @@
+<!-- starting up a project with node express firebase firestore -->
+
+npm i firebase-tools
+firebase login
+firebase init
+functions
+create new project
+enter the name of the project to be created on firebase
+select JavaScript
+select yes for linting
+select yes to install dependencies

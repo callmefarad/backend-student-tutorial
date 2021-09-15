@@ -16,13 +16,31 @@ fs.readFile("./files/name.txt", (error, data) => {
   }
 });
 
-// write to a file
-fs.writeFile("./files/name.txt", "Adejoke", (error) => {
-  if (error) {
-    console.log("Unable to write file: " + error);
+// Writing to a file
+fs.writeFile(
+  "./files/sampleFile.js",
+  "This is the new content of the file",
+  (error) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("File written successfully");
+    }
   }
-  console.log("file written successfully");
-});
+);
+
+// appending a file
+fs.appendFile(
+  "./files/sampleFiles.js",
+  "This is the new content of the file",
+  (error) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("File written successfully");
+    }
+  }
+);
 
 // make a directory
 if (!fs.existsSync("./courses")) {
@@ -48,6 +66,40 @@ if (fs.existsSync("./files/name2.txt")) {
       console.log("error trying to delete file");
     }
     console.log("file deleted successfully");
+  });
+}
+
+// rename function
+const renameMe = (length) => {
+  let checkCharacters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+
+  for (let i = 0; i < length; i++) {
+    result =
+      result +
+      checkCharacters.charAt(
+        Math.floor(Math.random() * checkCharacters.length)
+      );
+  }
+  return result;
+};
+
+if (!fs.existsSync("./foods")) {
+  fs.mkdir("./foods", (error) => {
+    if (error) {
+      console.log("error creating the directory" + error.message);
+    } else {
+      console.log("created");
+    }
+  });
+} else {
+  fs.rename("./foods", renameMe(3), (error) => {
+    if (error) {
+      console.log("unable to remove directory" + error.message);
+    } else {
+      console.log("renamed");
+    }
   });
 }
 

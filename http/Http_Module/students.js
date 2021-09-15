@@ -1,4 +1,4 @@
 const students = ["judith", "james", "chika", "ada"];
 
-console.log(students);
+// console.log(students);
 module.exports = students;
