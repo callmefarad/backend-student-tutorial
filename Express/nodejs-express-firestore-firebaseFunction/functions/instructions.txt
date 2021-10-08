@@ -1,11 +1,17 @@
-<!-- starting up a project with node express firebase firestore -->
+<!-- starting up a project with node express firebase firestore using the command below -->
 
 npm i firebase-tools
 firebase login
 firebase init
-functions
-create new project
-enter the name of the project to be created on firebase
-select JavaScript
-select yes for linting
-select yes to install dependencies
+select functions
+select create new project if you have not created one on firebase.
+give your project a name.
+BUT if you have an existing project, select use existing project and select the project from the list provided.
+select JavaScript.
+select yes for linting.
+select yes to install dependencies.
+
+- Once all is done successfully, you will see a functions directory created.....
+- Navigate to the directory and locate the index.js file, thats your server/entry file to run your API.....
+- To run the API, just enter the command below:
+npm run serve

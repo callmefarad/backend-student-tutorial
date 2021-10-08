@@ -1,7 +1,6 @@
 const express = require("express");
 const gameModel = require("../gameModel/gameModel");
 const multer = require("multer");
-const { db } = require("../gameModel/gameModel");
 
 // creating a disk storage instance( LOCAL STORAGE)
 const storage = multer.diskStorage({
@@ -13,8 +12,27 @@ const storage = multer.diskStorage({
   },
 });
 
+// creating an image filter
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimeType === "image/jpeg" ||
+    file.mimeType === "image/png" ||
+    file.mimeType === "image/jpg"
+  ) {
+    cb(null, true)
+  }
+  else {
+    cb(null, "File type is not supported")
+  }
+}
+
 // function for uploading a single image to the diskStorage created
-const uploadImage = multer({ storage }).single("avater");
+const uploadImage = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limit: {
+  fileSize: 1024 * 1024 * 20,
+} }).single("avater");
 
 // function for uploading multiple images to the diskStorage
 // const uploadImage = multer({storage}).array("image", 3);

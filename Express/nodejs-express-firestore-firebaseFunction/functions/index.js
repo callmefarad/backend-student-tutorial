@@ -1,14 +1,23 @@
+// import functions and admin from firebase
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+
+// import express library
 const express = require("express");
+
+// import cors for exposing your API for frontend consumption
 const cors = require("cors");
+
+// create an instance of express object
 const app = express();
 
-// service account details
+// service account details from firestore
 const serviceAccount = require("./permissions.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
+
+// create a firestore instance
 const db = admin.firestore();
 
 app.use(cors({ origin: true }));
@@ -17,10 +26,11 @@ app.use(cors({ origin: true }));
 // creating all endpoint with their functions
 // entry point
 app.get("/", (req, res) => {
-  res.status(200).send("Hello API");
+  res.status(200).send("Express Firestore, Firebase-Function API");
 });
 
 // create a student
+// REQUEST METHOD: POST
 app.post("/api/student", async (req, res) => {
   try {
     const data = {
@@ -30,16 +40,19 @@ app.post("/api/student", async (req, res) => {
     };
 
     const student = await db.collection("StudentBiodata").doc().create(data);
+    if (!student) {
+      res.status(400).json({ message: "There was an error creating student." });
+    }
     res.status(200).json({ student });
   } catch (error) {
-    res.status(4000).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 });
 
 // get all students
+// REQUEST METHOD: GET
 app.get("/api/student", async (req, res) => {
   try {
-    // const userQuerySnapshot = await db.collection("StudentBiodata").get();
     const userQuerySnapshot = await db.collection("StudentBiodata").get();
     const students = [];
     userQuerySnapshot.forEach((doc) => {
@@ -54,10 +67,14 @@ app.get("/api/student", async (req, res) => {
 });
 
 // get a student
+// REQUEST METHOD: GET
 app.get("/api/student/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const document = await db.collection("StudentBiodata").doc(id).get();
+    if (!document) {
+      res.status(404).json({ message: "Student with id " + id + " not found" });
+    }
     const student = await document.data();
     res.status(200).json({ student });
   } catch (error) {
@@ -66,7 +83,9 @@ app.get("/api/student/:id", async (req, res) => {
 });
 
 // update a student
-app.put("/api/student/:id", async (req, res) => {
+// REQUEST METHOD: PATCH
+
+app.patch("/api/student/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const document = db.collection("StudentBiodata").doc(id);
@@ -82,6 +101,7 @@ app.put("/api/student/:id", async (req, res) => {
 });
 
 // delete a student
+// REQUEST METHOD: DELETE
 app.delete("/api/student/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -94,11 +114,3 @@ app.delete("/api/student/:id", async (req, res) => {
 });
 
 exports.app = functions.https.onRequest(app);
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });

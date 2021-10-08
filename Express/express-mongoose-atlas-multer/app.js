@@ -4,11 +4,11 @@ require("dotenv").config();
 const Route = require("./gameRoute/gameRoute");
 const port = process.env.PORT || 4000;
 
-// console.log(process.env.DATABASE_URI);
+console.log`${ process.env.DATABASE_URI }`;
 // create connection
 mongoose.connect(
-  "mongodb+srv://callmefarad:B577f2Ai8bh6txuT@blog.eenxj.mongodb.net/gameDB?retryWrites=true&w=majority",
-  // process.env.DATABASE_URI,
+  // "mongodb+srv://callmefarad:B577f2Ai8bh6txuT@blog.eenxj.mongodb.net/gameDB?retryWrites=true&w=majority",
+  `${ process.env.DATABASE_URI }`,
   {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -23,7 +23,7 @@ mongoose.connection
     console.log("Connection Successful");
   })
   .on("error", () => {
-    console.log("Error is: ", error.message);
+    console.log("could not connect to the database");
   });
 
 const app = express();
