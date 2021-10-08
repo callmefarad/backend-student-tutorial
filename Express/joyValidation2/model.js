@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-
+// registration and login schema
 const loginSchema = mongoose.Schema({
     username: {
         type: String,
@@ -17,6 +17,7 @@ const loginSchema = mongoose.Schema({
     }
 })
 
+// model for the schema
 const loginModel = mongoose.model("loginModel", loginSchema);
 
 module.exports = loginModel;
