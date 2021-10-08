@@ -4,3 +4,4 @@
 
 # environment variables
 .env
+./Express/joyValidation2/.env
