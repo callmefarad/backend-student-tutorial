@@ -56,7 +56,7 @@ app.get("/api/student", async (req, res) => {
     const userQuerySnapshot = await db.collection("StudentBiodata").get();
     const students = [];
     userQuerySnapshot.forEach((doc) => {
-      students.push({ id: doc.id, data: doc.data });
+      students.push({ id: doc.id, data: doc.data() });
     });
     res
       .status(200)
@@ -72,7 +72,7 @@ app.get("/api/student/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const document = await db.collection("StudentBiodata").doc(id).get();
-    if (!document) {
+    if (!id) {
       res.status(404).json({ message: "Student with id " + id + " not found" });
     }
     const student = await document.data();
@@ -84,7 +84,6 @@ app.get("/api/student/:id", async (req, res) => {
 
 // update a student
 // REQUEST METHOD: PATCH
-
 app.patch("/api/student/:id", async (req, res) => {
   try {
     const id = req.params.id;

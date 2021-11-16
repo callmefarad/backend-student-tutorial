@@ -1,5 +1,10 @@
-const firebase = require('firebase');
-const config = require('./config');
+require('dotenv').config();
+// const firebase = require('firebase');
+const firebase = require('firebase/app').default;
+
+// require('firebase/firestore')
+// const config = require('./config')
+
 
 
 const firebaseConfig = {
@@ -9,8 +14,8 @@ const firebaseConfig = {
     storageBucket: process.env.STORAGE_BUCKET,
     messagingSenderId: process.env.MESSAGE_SENDER_ID,
     appId: process.env.APP_ID
-}
-// const db = firebase.initializeApp(config.firebaseConfig);
-const db = firebase.initializeApp(firebaseConfig);
+};
 
-module.exports = db;
+const app = firebase.initializeApp(firebaseConfig);
+
+module.exports = app;
