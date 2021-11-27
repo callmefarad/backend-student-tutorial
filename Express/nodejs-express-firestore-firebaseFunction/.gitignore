@@ -1,3 +1,6 @@
+# Permissions tokens
+permissions.json
+
 # Logs
 logs
 *.log
