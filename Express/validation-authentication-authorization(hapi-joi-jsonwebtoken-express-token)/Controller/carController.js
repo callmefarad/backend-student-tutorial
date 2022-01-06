@@ -47,7 +47,7 @@ const newCar = async (req, res) => {
       res.status(401).json({ message: "Data can not be empty." });
     }
 
-      res.status(200).json({ data: car, token: token });
+      res.status(200).json({ data: car });
   } catch (error) {
     res.status(401).json({ message: error.message });
   }

@@ -1,19 +1,11 @@
 const loginModel = require("../Model/userModel");
 const jwt = require("jsonwebtoken");
-const expressjwt = require("express-jwt");
+const expressJwt = require("express-jwt");
 const bcrypt = require("bcrypt");
 const { register, login } = require("../validateUser");
 // require('cookie-parser');
 
-// show all registered users
-const users = async (req, res) => {
-  try {
-    const user = await loginModel.find();
-    res.status(200).json({ message: "All Logged In Users", data: user });
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
+
 
 // register new user
 const signUp = async (req, res) => {
@@ -69,7 +61,7 @@ const signIn = async (req, res) => {
     const { error } = await login(req.body);
     // validate the error
     if (error) {
-      res.status(401).json({ message: err.message });
+      res.status(401).json({ message: error.message });
     }
 
     //  // get the email from the request body of the user data in the collection
@@ -103,21 +95,65 @@ const signIn = async (req, res) => {
 };
 
 // a middleware for creating private route
-const isSignedIn = expressjwt({
+const isSignedIn = expressJwt({
   secret: process.env.TOKEN_SECRETE,
   userProperty: "auth",
   algorithms: ['HS256'],
 });
 
+// show all registered users
+const users = async (req, res) => {
+  try {
+    const user = await loginModel.find();
+    res.status(200).json({ message: "All Registered Users", data: user });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+// delete a user
+const delUser = async (req, res) => {
+  try{
+    const userId = req.params.id;
+  if(!userId){
+    res.send("Incorrect User ID.")
+  }
+  const user = await loginModel.findById(userId);
+  const deletedUser = await loginModel.deleteOne(user);
+  if(!deletedUser){
+    res.send("There is a problem deleting this user.")
+  }res.status(200).json({message: "User Deleted Successfully"})
+  }catch(error) {
+    res.status(400).json({message: error.message})
+  }
+}
+
+// update a user
+const updateUsers = async (req, res) =>{
+  try{
+    userId = req.params.id;
+    if(!userId){
+      res.send("Invalid UserId.")
+    }
+    // const updateUser = await loginModel.findById(userId);
+    const updatedUser = await loginModel.findByIdAndUpdate(userId)
+    res.status(200).json({message: "User Updated Successfully", data: updatedUser});
+  }catch(error){
+    res.json({message: error.message})
+  }
+}
+
 // create a private route that the user can access if they logged in with an assigned token
 const homepage = (req, res) => {
   res.status(200).json({
-    message: "Welcome!!! You are verified and can view our homepage.s",
+    message: "Welcome!!! You are verified and can view our homepage",
   });
 };
 
 module.exports = {
   users,
+  delUser,
+  updateUsers,
   signUp,
   signIn,
   isSignedIn,
